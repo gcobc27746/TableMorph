@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "TableMorph",
+  "version": "1.0",
+  "description": "Convert clipboard table data to various formats",
+  "permissions": ["clipboardRead", "clipboardWrite"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}</content>
+<parameter name="filePath">/workspaces/TableMorph/manifest.json
