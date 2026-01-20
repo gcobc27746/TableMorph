@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Papa from 'papaparse'
 import { parseHtmlTable, convertToMarkdown, convertToLatex, convertToJson, convertToSheets } from './utils'

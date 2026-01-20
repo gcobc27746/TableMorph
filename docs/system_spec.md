@@ -20,7 +20,7 @@ TableMorph 系統規格書 (V3 完整版)
 • PapaParse：處理 TSV/CSV 數據解析。
 • Turndown：將 HTML 表格轉為 Markdown。
 • markdown-table：生成格式完美的 Markdown 字串。
-• json-to-latex-table：生成 LaTeX 表格代碼。
+• 內建 LaTeX 轉換器：生成 LaTeX 表格代碼。
 4. 系統架構與資料流 (System Architecture)
 1. 讀取 (Read)：透過 navigator.clipboard.read() 獲取數據。
 2. 預處理 (Normalize)：由 PapaParse 或 Turndown 將輸入轉為二維陣列 (2D Array)。

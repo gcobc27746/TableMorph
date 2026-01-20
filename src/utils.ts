@@ -1,6 +1,5 @@
 import Papa from 'papaparse'
-import { table as markdownTable } from 'markdown-table'
-import jsonToLatexTable from 'json-to-latex-table'
+import { markdownTable } from 'markdown-table'
 
 export const parseHtmlTable = (html: string): string[][] => {
   const parser = new DOMParser()
@@ -17,7 +16,30 @@ export const convertToMarkdown = (tableData: string[][]): string => {
 }
 
 export const convertToLatex = (tableData: string[][]): string => {
-  return jsonToLatexTable(tableData)
+  if (tableData.length === 0) return ''
+
+  const columnCount = Math.max(...tableData.map(row => row.length))
+  const columnSpec = Array.from({ length: columnCount }, () => 'l').join('')
+
+  const escapeLatex = (value: string): string =>
+    value
+      .replace(/\\/g, '\\textbackslash{}')
+      .replace(/&/g, '\\&')
+      .replace(/%/g, '\\%')
+      .replace(/\$/g, '\\$')
+      .replace(/#/g, '\\#')
+      .replace(/_/g, '\\_')
+      .replace(/\{/g, '\\{')
+      .replace(/\}/g, '\\}')
+      .replace(/~/g, '\\textasciitilde{}')
+      .replace(/\^/g, '\\textasciicircum{}')
+
+  const rows = tableData.map(row => {
+    const padded = Array.from({ length: columnCount }, (_, index) => row[index] ?? '')
+    return `${padded.map(cell => escapeLatex(cell)).join(' & ')} \\\\`
+  })
+
+  return [`\\begin{tabular}{${columnSpec}}`, ...rows, '\\end{tabular}'].join('\n')
 }
 
 export const convertToJson = (tableData: string[][]): string => {
