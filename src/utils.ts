@@ -11,6 +11,52 @@ export const parseHtmlTable = (html: string): string[][] => {
   return rows.map(row => Array.from(row.cells).map(cell => cell.textContent || ''))
 }
 
+const isMarkdownSeparator = (line: string): boolean => {
+  const trimmed = line.trim()
+  if (!trimmed.includes('|')) return false
+  return /^(\|?\s*:?-+:?\s*)+(\|\s*:?-+:?\s*)+\|?$/.test(trimmed)
+}
+
+export const parseMarkdownTable = (text: string): string[][] | null => {
+  const lines = text
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean)
+
+  if (lines.length < 2 || !isMarkdownSeparator(lines[1])) return null
+
+  const rows = lines.filter((_, index) => index !== 1)
+  const parsed = rows.map(line => {
+    let cells = line.split('|')
+    if (cells.length && cells[0].trim() === '') cells = cells.slice(1)
+    if (cells.length && cells[cells.length - 1].trim() === '') cells = cells.slice(0, -1)
+    return cells.map(cell => cell.trim())
+  })
+
+  return parsed.length ? parsed : null
+}
+
+export const parseLatexTable = (text: string): string[][] | null => {
+  if (!text.includes('\\begin{tabular}')) return null
+
+  const tabularMatch = text.match(/\\begin\{tabular\}[\s\S]*?\\end\{tabular\}/)
+  const tabularBody = tabularMatch ? tabularMatch[0] : text
+
+  const rows = tabularBody
+    .split(/\\\\/g)
+    .map(line =>
+      line
+        .replace(/\\hline/g, '')
+        .replace(/\\begin\{tabular\}\{[^}]*\}/g, '')
+        .replace(/\\end\{tabular\}/g, '')
+        .trim()
+    )
+    .filter(line => line.length > 0)
+
+  const parsed = rows.map(row => row.split('&').map(cell => cell.trim()))
+  return parsed.length ? parsed : null
+}
+
 export const convertToMarkdown = (tableData: string[][]): string => {
   return markdownTable(tableData)
 }

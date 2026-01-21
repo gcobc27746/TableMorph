@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest'
-import { parseHtmlTable, convertToMarkdown, convertToLatex, convertToJson, convertToSheets } from './utils'
+import {
+  parseHtmlTable,
+  parseMarkdownTable,
+  convertToMarkdown,
+  convertToLatex,
+  convertToJson,
+  convertToSheets,
+} from './utils'
 
 describe('parseHtmlTable', () => {
   it('should parse simple HTML table', () => {
@@ -14,6 +21,14 @@ describe('convertToMarkdown', () => {
     const data = [['A', 'B'], ['C', 'D']]
     const result = convertToMarkdown(data)
     expect(result).toContain('| A | B |')
+  })
+})
+
+describe('parseMarkdownTable', () => {
+  it('should parse Markdown table', () => {
+    const markdown = `| A | B |\n| --- | --- |\n| C | D |`
+    const result = parseMarkdownTable(markdown)
+    expect(result).toEqual([['A', 'B'], ['C', 'D']])
   })
 })
 
