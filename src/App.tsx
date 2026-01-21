@@ -3,6 +3,7 @@ import './App.css'
 import Papa from 'papaparse'
 import {
   parseHtmlTable,
+  parseJsonTable,
   parseLatexTable,
   parseMarkdownTable,
   convertToMarkdown,
@@ -59,7 +60,7 @@ function App() {
       logDev('Clipboard raw data:', data)
 
       let tableData: string[][] = []
-      let detectedFormat: 'html' | 'markdown' | 'latex' | 'tsv/csv' = 'tsv/csv'
+      let detectedFormat: 'html' | 'markdown' | 'latex' | 'json' | 'tsv/csv' = 'tsv/csv'
 
       if (isHtml) {
         detectedFormat = 'html'
@@ -85,20 +86,26 @@ function App() {
           }
         }
       } else {
-        const latexTable = parseLatexTable(data)
-        if (latexTable) {
-          detectedFormat = 'latex'
-          tableData = latexTable
+        const jsonTable = parseJsonTable(data)
+        if (jsonTable) {
+          detectedFormat = 'json'
+          tableData = jsonTable
         } else {
-          const markdownTable = parseMarkdownTable(data)
-          if (markdownTable) {
-            detectedFormat = 'markdown'
-            tableData = markdownTable
+          const latexTable = parseLatexTable(data)
+          if (latexTable) {
+            detectedFormat = 'latex'
+            tableData = latexTable
           } else {
-            // Assume TSV or CSV
-            detectedFormat = 'tsv/csv'
-            const parsed = Papa.parse(data, { skipEmptyLines: true })
-            tableData = parsed.data as string[][]
+            const markdownTable = parseMarkdownTable(data)
+            if (markdownTable) {
+              detectedFormat = 'markdown'
+              tableData = markdownTable
+            } else {
+              // Assume TSV or CSV
+              detectedFormat = 'tsv/csv'
+              const parsed = Papa.parse(data, { skipEmptyLines: true })
+              tableData = parsed.data as string[][]
+            }
           }
         }
       }

@@ -57,6 +57,41 @@ export const parseLatexTable = (text: string): string[][] | null => {
   return parsed.length ? parsed : null
 }
 
+export const parseJsonTable = (text: string): string[][] | null => {
+  const trimmed = text.trim()
+  if (!trimmed.startsWith('[')) return null
+
+  try {
+    const parsed = JSON.parse(trimmed)
+    if (!Array.isArray(parsed)) return null
+
+    if (parsed.length === 0) return []
+
+    if (Array.isArray(parsed[0])) {
+      const rows = parsed as unknown[]
+      return rows.map(row =>
+        Array.isArray(row) ? row.map(cell => String(cell ?? '')) : [String(row ?? '')]
+      )
+    }
+
+    if (typeof parsed[0] === 'object' && parsed[0] !== null) {
+      const objects = parsed as Record<string, unknown>[]
+      const headers = Array.from(
+        objects.reduce((set, item) => {
+          Object.keys(item).forEach(key => set.add(key))
+          return set
+        }, new Set<string>())
+      )
+      const rows = objects.map(item => headers.map(key => String(item[key] ?? '')))
+      return [headers, ...rows]
+    }
+  } catch {
+    return null
+  }
+
+  return null
+}
+
 export const convertToMarkdown = (tableData: string[][]): string => {
   return markdownTable(tableData)
 }
