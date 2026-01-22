@@ -23,16 +23,11 @@
   gap: 8px;
 }
 
-.app__brand-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.app__brand-logo {
   width: 24px;
   height: 24px;
   border-radius: 4px;
-  background: #135bec;
-  color: #ffffff;
-  font-size: 16px;
+  object-fit: cover;
 }
 
 .app__title {

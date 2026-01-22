@@ -11,5 +11,11 @@
   ],
   "action": {
     "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "src/images/TableMorph.png",
+    "32": "src/images/TableMorph.png",
+    "48": "src/images/TableMorph.png",
+    "128": "src/images/TableMorph.png"
   }
 }

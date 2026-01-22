@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import Papa from 'papaparse'
+import logoUrl from './images/TableMorph.png'
 import {
   parseHtmlTable,
   parseJsonTable,
@@ -149,7 +150,7 @@ function App() {
     <div className="app">
       <header className="app__header">
         <div className="app__brand">
-          <span className="app__brand-icon material-symbols-outlined">grid_view</span>
+          <img className="app__brand-logo" src={logoUrl} alt="TableMorph logo" />
           <h1 className="app__title">TableMorph</h1>
         </div>
         <button className="app__icon-button" type="button" aria-label="Settings">
