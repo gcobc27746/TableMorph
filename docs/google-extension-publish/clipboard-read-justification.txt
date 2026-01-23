@@ -1,0 +1,18 @@
+TableMorph ClipboardRead Permission Justification
+
+Extension: TableMorph
+Version: 1.0
+
+Permission: clipboardRead
+
+Justification:
+TableMorph requires clipboardRead permission to fulfill its core functionality of table data format conversion. Without this permission, the extension cannot access copied table data, making conversion impossible.
+
+Usage:
+User copies table data, clicks conversion button. Extension reads clipboard using navigator.clipboard.read(), detects format, converts to target format, writes result back.
+
+Why Necessary:
+TableMorph operates entirely through clipboard operations. Extension needs to read both HTML and plain text formats to support various table sources.
+
+Privacy:
+Extension only reads clipboard when user explicitly triggers conversion. All processing is local. No data transmission or storage.

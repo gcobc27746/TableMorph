@@ -1,0 +1,18 @@
+TableMorph ClipboardWrite Permission Justification
+
+Extension: TableMorph
+Version: 1.0
+
+Permission: clipboardWrite
+
+Justification:
+TableMorph requires clipboardWrite permission to write converted table data back to clipboard. Without this permission, users cannot paste the converted result, making the extension useless.
+
+Usage:
+After converting table data from one format to another, TableMorph writes the converted result back to clipboard using navigator.clipboard.writeText(). Users can then paste the converted data directly into their target application.
+
+Why Necessary:
+TableMorph's workflow is: read from clipboard → convert → write back to clipboard. Without clipboardWrite permission, users would need to manually copy the converted result, defeating the purpose of seamless clipboard-based conversion.
+
+Privacy:
+Extension only writes to clipboard when user explicitly triggers conversion. All processing is local. No data transmission or storage.

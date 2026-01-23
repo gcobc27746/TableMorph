@@ -1,0 +1,23 @@
+TableMorph Single Purpose Policy Statement
+
+Extension: TableMorph
+Version: 1.0
+
+Single Purpose Statement:
+TableMorph is a Chrome extension focused solely on table data format conversion via clipboard. It enables users to convert table data between formats.
+
+Core Features:
+1. Read table data from clipboard (HTML, Markdown, LaTeX, JSON, TSV/CSV)
+2. Convert to target formats (Markdown, LaTeX, JSON, Sheets/TSV)
+3. Write converted results back to clipboard
+
+Single Purpose Compliance:
+All features focus on "table format conversion" only. No unrelated features, no data collection, all processing is local. Uses clipboardRead and clipboardWrite.
+
+Use Cases:
+- Researchers using tables in LaTeX documents
+- Developers inserting tables in Markdown documents
+- Data analysts converting table formats
+
+Conclusion:
+TableMorph adheres to single purpose principle, focusing exclusively on table format conversion. All features and permissions serve this purpose, complying with Chrome Web Store policy.
