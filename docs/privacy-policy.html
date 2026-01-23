@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TableMorph 隱私權政策</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 600;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .highlight-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .last-updated {
+            color: #999;
+            font-size: 0.95em;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .header {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TableMorph 隱私權政策</h1>
+            <p>最後更新日期：2026年1月23日</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>1. 簡介</h2>
+                <p>
+                    TableMorph（以下簡稱「本擴充功能」）是由我們開發的 Chrome 瀏覽器擴充功能。
+                    我們非常重視您的隱私權，本隱私權政策旨在說明我們如何收集、使用、儲存和保護您的資訊。
+                    使用本擴充功能即表示您同意本隱私權政策的條款。
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>2. 資料收集</h2>
+                <h3>2.1 剪貼簿資料</h3>
+                <p>
+                    本擴充功能需要存取您的剪貼簿內容，以執行表格格式轉換功能。
+                    我們僅在您明確點擊轉換按鈕時才會讀取剪貼簿內容。
+                </p>
+                
+                <div class="highlight-box">
+                    <strong>重要說明：</strong>
+                    <p>
+                        本擴充功能不會在背景自動讀取您的剪貼簿。
+                        只有在您主動觸發轉換功能時，才會讀取剪貼簿中的表格資料。
+                    </p>
+                </div>
+
+                <h3>2.2 資料類型</h3>
+                <p>本擴充功能可能讀取的資料類型包括：</p>
+                <ul>
+                    <li>HTML 格式的表格資料（例如：從網頁或 Google Sheets 複製的內容）</li>
+                    <li>純文字格式的表格資料（例如：TSV、CSV 格式）</li>
+                    <li>Markdown 格式的表格</li>
+                    <li>LaTeX 格式的表格</li>
+                    <li>JSON 格式的表格資料</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>3. 資料使用方式</h2>
+                <p>我們使用您剪貼簿中的資料僅用於以下目的：</p>
+                <ul>
+                    <li><strong>格式轉換：</strong>將表格資料從一種格式轉換為另一種格式（Markdown、LaTeX、JSON、TSV）</li>
+                    <li><strong>本地處理：</strong>所有轉換作業均在您的裝置本地進行</li>
+                    <li><strong>寫回剪貼簿：</strong>將轉換後的結果寫回您的剪貼簿，方便您直接貼上使用</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>隱私承諾：</strong>
+                    <p>
+                        我們不會將您的資料用於任何其他目的，包括但不限於：
+                        資料分析、廣告投放、資料銷售、或與第三方共享。
+                    </p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>4. 資料儲存</h2>
+                <p>
+                    <strong>本擴充功能不會儲存您的任何資料。</strong>
+                    所有讀取的剪貼簿內容僅在記憶體中進行處理，轉換完成後立即清除。
+                    我們不會將您的資料儲存在本地檔案、資料庫、或任何其他儲存媒介中。
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>5. 資料傳輸與共享</h2>
+                <p>
+                    <strong>本擴充功能不會將您的資料傳輸到任何伺服器或第三方服務。</strong>
+                    所有處理作業均在您的瀏覽器本地執行，不會有任何網路傳輸行為。
+                </p>
+                <p>
+                    我們不會與任何第三方共享、出售、或租賃您的個人資料或剪貼簿內容。
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>6. 權限說明</h2>
+                <p>本擴充功能需要以下權限才能正常運作：</p>
+                <ul>
+                    <li><strong>clipboardRead：</strong>用於讀取剪貼簿中的表格資料</li>
+                    <li><strong>clipboardWrite：</strong>用於將轉換後的結果寫回剪貼簿</li>
+                </ul>
+                <p>
+                    這些權限僅用於實現本擴充功能的核心功能，不會用於其他用途。
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>7. 第三方服務</h2>
+                <p>
+                    本擴充功能使用以下開源套件進行資料處理，這些套件均在您的裝置本地執行：
+                </p>
+                <ul>
+                    <li>PapaParse：用於解析 TSV/CSV 資料</li>
+                    <li>Turndown：用於將 HTML 表格轉換為 Markdown</li>
+                    <li>markdown-table：用於生成 Markdown 表格格式</li>
+                </ul>
+                <p>
+                    這些套件不會將您的資料傳輸到外部伺服器，所有處理均在本地完成。
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>8. 資料安全</h2>
+                <p>
+                    由於所有資料處理均在您的裝置本地進行，且不會儲存任何資料，
+                    因此您的資料安全主要取決於您裝置的安全性。
+                    我們建議您：
+                </p>
+                <ul>
+                    <li>保持您的瀏覽器和作業系統為最新版本</li>
+                    <li>使用強密碼保護您的裝置</li>
+                    <li>僅從可信來源安裝擴充功能</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>9. 您的權利</h2>
+                <p>您對您的資料享有以下權利：</p>
+                <ul>
+                    <li><strong>存取權：</strong>由於我們不儲存資料，您可以直接查看剪貼簿內容</li>
+                    <li><strong>控制權：</strong>您可以隨時選擇是否使用本擴充功能</li>
+                    <li><strong>刪除權：</strong>您可以隨時解除安裝本擴充功能</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>10. 兒童隱私</h2>
+                <p>
+                    本擴充功能並非專為 13 歲以下的兒童設計。
+                    我們不會故意收集兒童的個人資訊。
+                    如果您是家長或監護人，並發現您的孩子向我們提供了個人資訊，
+                    請聯繫我們，我們將立即刪除該資訊。
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>11. 政策變更</h2>
+                <p>
+                    我們可能會不定期更新本隱私權政策。
+                    任何重大變更都會在擴充功能中或透過其他適當方式通知您。
+                    建議您定期查看本頁面以了解最新的隱私權政策。
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>12. 聯絡我們</h2>
+                <p>
+                    如果您對本隱私權政策有任何疑問、意見或建議，請透過以下方式聯繫我們：
+                </p>
+                <p>
+                    <strong>專案資訊：</strong><br>
+                    專案名稱：TableMorph<br>
+                    版本：1.0<br>
+                    類型：Chrome 瀏覽器擴充功能
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>13. 同意條款</h2>
+                <p>
+                    使用本擴充功能即表示您已閱讀、理解並同意本隱私權政策的所有條款。
+                    如果您不同意本政策的任何部分，請勿使用本擴充功能。
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>TableMorph 隱私權政策</strong></p>
+            <p>本政策適用於 TableMorph Chrome 瀏覽器擴充功能</p>
+            <p class="last-updated">最後更新：2026年1月23日</p>
+        </div>
+    </div>
+</body>
+</html>
