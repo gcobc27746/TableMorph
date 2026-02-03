@@ -11,6 +11,8 @@ import {
   convertToLatex,
   convertToJson,
   convertToSheets,
+  expandTableData,
+  type TableData,
 } from './utils'
 
 function App() {
@@ -69,7 +71,7 @@ function App() {
 
       logDev('Clipboard raw data:', data)
 
-      let tableData: string[][] = []
+      let tableData: TableData | string[][] = []
       let detectedFormat: 'html' | 'markdown' | 'latex' | 'json' | 'tsv/csv' = 'tsv/csv'
 
       if (isHtml) {
@@ -86,12 +88,17 @@ function App() {
           const latexTable = parseLatexTable(htmlText)
           if (latexTable) {
             detectedFormat = 'latex'
-            tableData = latexTable
+            // parseLatexTable 現在返回 TableData 或 string[][]
+            if (latexTable.length > 0 && typeof latexTable[0][0] === 'string') {
+              tableData = expandTableData(latexTable as string[][])
+            } else {
+              tableData = latexTable as TableData
+            }
           } else {
             const markdownTable = parseMarkdownTable(htmlText)
             if (markdownTable) {
               detectedFormat = 'markdown'
-              tableData = markdownTable
+              tableData = expandTableData(markdownTable)
             }
           }
         }
@@ -99,17 +106,27 @@ function App() {
         const jsonTable = parseJsonTable(data)
         if (jsonTable) {
           detectedFormat = 'json'
-          tableData = jsonTable
+          // parseJsonTable 現在返回 TableData 或 string[][]
+          if (jsonTable.length > 0 && typeof jsonTable[0][0] === 'string') {
+            tableData = expandTableData(jsonTable as string[][])
+          } else {
+            tableData = jsonTable as TableData
+          }
         } else {
           const latexTable = parseLatexTable(data)
           if (latexTable) {
             detectedFormat = 'latex'
-            tableData = latexTable
+            // parseLatexTable 現在返回 TableData 或 string[][]
+            if (latexTable.length > 0 && typeof latexTable[0][0] === 'string') {
+              tableData = expandTableData(latexTable as string[][])
+            } else {
+              tableData = latexTable as TableData
+            }
           } else {
             const markdownTable = parseMarkdownTable(data)
             if (markdownTable) {
               detectedFormat = 'markdown'
-              tableData = markdownTable
+              tableData = expandTableData(markdownTable)
             } else {
               // Assume TSV or CSV - but validate it's actually a table
               // First check if data looks like code (JSON, etc.) - reject if so
@@ -143,7 +160,7 @@ function App() {
                 
                 if (hasConsistentColumns && parsedData.length > 0) {
                   detectedFormat = 'tsv/csv'
-                  tableData = parsedData
+                  tableData = expandTableData(parsedData)
                 } else {
                   // Not a valid table format
                   detectedFormat = 'tsv/csv'
@@ -158,9 +175,26 @@ function App() {
       logDev('Detected input format:', detectedFormat)
 
       // Validate detected format and table data before conversion
-      const isValidTableData =
-        tableData.length > 0 &&
-        tableData.some(row => row.length > 0 && row.some(cell => cell.trim().length > 0))
+      const isValidTableData = (() => {
+        if (tableData.length === 0) return false
+        
+        // Check if it's TableData (CellInfo[][]) or string[][]
+        const firstRow = tableData[0]
+        if (firstRow.length === 0) return false
+        
+        const firstCell = firstRow[0]
+        if (typeof firstCell === 'string') {
+          // It's string[][]
+          return (tableData as string[][]).some(row => 
+            row.length > 0 && row.some(cell => String(cell).trim().length > 0)
+          )
+        } else {
+          // It's TableData
+          return (tableData as TableData).some(row => 
+            row.length > 0 && row.some(cell => cell.value.trim().length > 0)
+          )
+        }
+      })()
 
       if (!isValidTableData) {
         // Restore original clipboard content
