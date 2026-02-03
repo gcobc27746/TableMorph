@@ -15,6 +15,7 @@ import {
 
 function App() {
   const [status, setStatus] = useState('')
+  const [isError, setIsError] = useState(false)
   const [activeFormat, setActiveFormat] = useState('')
   const toastTimerRef = useRef<number | null>(null)
   const logDev = (...args: unknown[]) => {
@@ -39,17 +40,25 @@ function App() {
       const clipboardItems = await navigator.clipboard.read()
       let data = ''
       let isHtml = false
+      
+      // Save original clipboard content for potential restoration
+      let originalHtmlData: string | null = null
+      let originalPlainData: string | null = null
 
       for (const item of clipboardItems) {
-        if (item.types.includes('text/html')) {
+        if (item.types.includes('text/html') && !isHtml) {
           const html = await item.getType('text/html')
           data = await html.text()
+          originalHtmlData = data
           isHtml = true
-          break
-        } else if (item.types.includes('text/plain')) {
+        }
+        if (item.types.includes('text/plain') && !originalPlainData) {
           const text = await item.getType('text/plain')
-          data = await text.text()
-          break
+          const plainText = await text.text()
+          originalPlainData = plainText
+          if (!data) {
+            data = plainText
+          }
         }
       }
 
@@ -102,16 +111,88 @@ function App() {
               detectedFormat = 'markdown'
               tableData = markdownTable
             } else {
-              // Assume TSV or CSV
-              detectedFormat = 'tsv/csv'
-              const parsed = Papa.parse(data, { skipEmptyLines: true })
-              tableData = parsed.data as string[][]
+              // Assume TSV or CSV - but validate it's actually a table
+              // First check if data looks like code (JSON, etc.) - reject if so
+              const looksLikeCode = 
+                (data.includes('{') && data.includes('}')) ||
+                (data.includes('[') && data.includes(']')) ||
+                (data.includes('"') && data.includes(':')) ||
+                data.trim().startsWith('{') ||
+                data.trim().startsWith('[')
+              
+              if (looksLikeCode) {
+                // Looks like code, not a table - reject
+                detectedFormat = 'tsv/csv'
+                tableData = []
+              } else {
+                const parsed = Papa.parse(data, { skipEmptyLines: true })
+                const parsedData = parsed.data as string[][]
+                
+                // Validate TSV/CSV: must be a real table
+                // A real table should have at least 2 columns consistently
+                const maxColumns = parsedData.length > 0 
+                  ? Math.max(...parsedData.map(row => row.length), 0)
+                  : 0
+                const minColumns = parsedData.length > 0
+                  ? Math.min(...parsedData.map(row => row.length), Infinity)
+                  : 0
+                
+                // Check if it's a real table: need at least 2 columns consistently
+                // Single column data or inconsistent structure is not a table
+                const hasConsistentColumns = maxColumns >= 2 && minColumns >= 2
+                
+                if (hasConsistentColumns && parsedData.length > 0) {
+                  detectedFormat = 'tsv/csv'
+                  tableData = parsedData
+                } else {
+                  // Not a valid table format
+                  detectedFormat = 'tsv/csv'
+                  tableData = []
+                }
+              }
             }
           }
         }
       }
 
       logDev('Detected input format:', detectedFormat)
+
+      // Validate detected format and table data before conversion
+      const isValidTableData =
+        tableData.length > 0 &&
+        tableData.some(row => row.length > 0 && row.some(cell => cell.trim().length > 0))
+
+      if (!isValidTableData) {
+        // Restore original clipboard content
+        const restoreData: Record<string, Blob> = {}
+        if (originalHtmlData) {
+          restoreData['text/html'] = new Blob([originalHtmlData], { type: 'text/html' })
+        }
+        if (originalPlainData) {
+          restoreData['text/plain'] = new Blob([originalPlainData], { type: 'text/plain' })
+        }
+
+        if (Object.keys(restoreData).length > 0) {
+          try {
+            await navigator.clipboard.write([new ClipboardItem(restoreData)])
+            logDev('Clipboard restored to original content')
+          } catch (restoreError) {
+            logDev('Failed to restore clipboard:', restoreError)
+          }
+        }
+
+        setStatus('Conversion failed')
+        setIsError(true)
+        if (toastTimerRef.current !== null) {
+          window.clearTimeout(toastTimerRef.current)
+        }
+        toastTimerRef.current = window.setTimeout(() => {
+          setStatus('')
+          setIsError(false)
+          setActiveFormat('')
+        }, 2000)
+        return
+      }
 
       let result = ''
 
@@ -127,19 +208,63 @@ function App() {
 
       logDev('Converted output:', result)
 
+      // Check if result is empty
+      if (!result || result.trim().length === 0) {
+        // Restore original clipboard content
+        const restoreData: Record<string, Blob> = {}
+        if (originalHtmlData) {
+          restoreData['text/html'] = new Blob([originalHtmlData], { type: 'text/html' })
+        }
+        if (originalPlainData) {
+          restoreData['text/plain'] = new Blob([originalPlainData], { type: 'text/plain' })
+        }
+        
+        if (Object.keys(restoreData).length > 0) {
+          try {
+            await navigator.clipboard.write([new ClipboardItem(restoreData)])
+            logDev('Clipboard restored to original content')
+          } catch (restoreError) {
+            logDev('Failed to restore clipboard:', restoreError)
+          }
+        }
+        
+        setStatus('Conversion failed')
+        setIsError(true)
+        if (toastTimerRef.current !== null) {
+          window.clearTimeout(toastTimerRef.current)
+        }
+        toastTimerRef.current = window.setTimeout(() => {
+          setStatus('')
+          setIsError(false)
+          setActiveFormat('')
+        }, 2000)
+        return
+      }
+
       // Write back to clipboard
       await navigator.clipboard.writeText(result)
       logDev('Clipboard write: success')
       setStatus('Copied to Clipboard!')
+      setIsError(false)
       if (toastTimerRef.current !== null) {
         window.clearTimeout(toastTimerRef.current)
       }
       toastTimerRef.current = window.setTimeout(() => {
         setStatus('')
+        setIsError(false)
         setActiveFormat('')
       }, 1000)
     } catch (error) {
-      setStatus('Error: ' + (error as Error).message)
+      setStatus('轉換失敗')
+      setIsError(true)
+      if (toastTimerRef.current !== null) {
+        window.clearTimeout(toastTimerRef.current)
+      }
+      toastTimerRef.current = window.setTimeout(() => {
+        setStatus('')
+        setIsError(false)
+        setActiveFormat('')
+      }, 2000)
     }
   }
 
@@ -189,8 +314,10 @@ function App() {
           </button>
         </div>
         {status ? (
-          <div className="toast" role="status">
-            <span className="material-symbols-outlined toast__icon">check</span>
+          <div className={`toast ${isError ? 'toast--error' : ''}`} role="status">
+            <span className="material-symbols-outlined toast__icon">
+              {isError ? 'close' : 'check'}
+            </span>
             <span className="toast__text">{status}</span>
           </div>
         ) : null}

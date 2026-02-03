@@ -189,3 +189,7 @@
   font-size: 14px;
   color: #34d399;
 }
+
+.toast--error .toast__icon {
+  color: #ef4444;
+}
