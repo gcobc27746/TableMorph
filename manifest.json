@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "TableMorph",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Convert clipboard table data to various formats",
   "permissions": ["clipboardRead", "clipboardWrite"],
   "action": {
