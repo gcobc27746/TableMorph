@@ -1,0 +1,409 @@
+{
+  "version": "2.6",
+  "children": [
+    {
+      "type": "frame",
+      "id": "bi8Au",
+      "x": 0,
+      "y": 0,
+      "name": "TableMorph App",
+      "clip": true,
+      "width": 320,
+      "fill": "#0f141f",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "z74TK",
+          "name": "Header",
+          "width": "fill_container",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "#1e293b"
+          },
+          "padding": [
+            12,
+            16
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "E4Hps",
+              "name": "brand",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "IIcBG",
+                  "name": "TableMorph Logo",
+                  "width": 24,
+                  "height": 24,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "../../src/images/TableMorph.png",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 4,
+                  "layout": "none"
+                },
+                {
+                  "type": "text",
+                  "id": "E5qMd",
+                  "name": "title",
+                  "fill": "#ffffff",
+                  "content": "TableMorph",
+                  "fontFamily": "Space Grotesk",
+                  "fontSize": 16,
+                  "fontWeight": "700",
+                  "letterSpacing": -0.32
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "RzqXU",
+              "name": "settingsBtn",
+              "width": 32,
+              "height": 32,
+              "fill": "transparent",
+              "cornerRadius": 6,
+              "stroke": {
+                "align": "center",
+                "thickness": 1,
+                "fill": "transparent"
+              },
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "plCkw",
+                  "name": "settingsIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "settings",
+                  "iconFontFamily": "Material Symbols Outlined",
+                  "fill": "#94a3b8"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "k36xh",
+          "name": "Content",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "hp7HH",
+              "name": "Grid",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "2ofad",
+                  "name": "Row 1",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "CYTba",
+                      "name": "Markdown Card",
+                      "width": "fill_container",
+                      "fill": "rgba(15, 23, 42, 0.4)",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#1e293b"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ZPw6x",
+                          "name": "markdownIcon",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "#3b82f61a",
+                          "cornerRadius": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "Gq87N",
+                              "name": "markdownIconSymbol",
+                              "width": 20,
+                              "height": 20,
+                              "iconFontName": "format_quote",
+                              "iconFontFamily": "Material Symbols Outlined",
+                              "weight": 700,
+                              "fill": "#3b82f6"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "uKH0a",
+                          "name": "markdownLabel",
+                          "fill": "#ffffff",
+                          "content": "Markdown",
+                          "fontFamily": "Space Grotesk",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "6j9S5",
+                      "name": "LaTeX Card",
+                      "width": "fill_container",
+                      "fill": "rgba(15, 23, 42, 0.4)",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#1e293b"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "8fdfD",
+                          "name": "latexIcon",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "#6366f11a",
+                          "cornerRadius": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "pyJNC",
+                              "name": "latexIconSymbol",
+                              "width": 20,
+                              "height": 20,
+                              "iconFontName": "functions",
+                              "iconFontFamily": "Material Symbols Outlined",
+                              "weight": 700,
+                              "fill": "#6366f1"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "QzT1d",
+                          "name": "latexLabel",
+                          "fill": "#ffffff",
+                          "content": "LaTeX",
+                          "fontFamily": "Space Grotesk",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "6lqKe",
+                  "name": "Row 2",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Rll7s",
+                      "name": "Sheets Card",
+                      "width": "fill_container",
+                      "fill": "rgba(15, 23, 42, 0.4)",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#1e293b"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "AQewA",
+                          "name": "sheetsIcon",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "#10b9811a",
+                          "cornerRadius": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "aY83b",
+                              "name": "sheetsIconSymbol",
+                              "width": 20,
+                              "height": 20,
+                              "iconFontName": "table_chart",
+                              "iconFontFamily": "Material Symbols Outlined",
+                              "weight": 700,
+                              "fill": "#10b981"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "iUVME",
+                          "name": "sheetsLabel",
+                          "fill": "#ffffff",
+                          "content": "Sheets",
+                          "fontFamily": "Space Grotesk",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qsyMA",
+                      "name": "JSON Card",
+                      "width": "fill_container",
+                      "fill": "rgba(15, 23, 42, 0.4)",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#1e293b"
+                      },
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Av04H",
+                          "name": "jsonIcon",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "#f59e0b1a",
+                          "cornerRadius": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "UUJvf",
+                              "name": "jsonIconSymbol",
+                              "width": 20,
+                              "height": 20,
+                              "iconFontName": "data_object",
+                              "iconFontFamily": "Material Symbols Outlined",
+                              "weight": 700,
+                              "fill": "#f59e0b"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "5uSaD",
+                          "name": "jsonLabel",
+                          "fill": "#ffffff",
+                          "content": "JSON",
+                          "fontFamily": "Space Grotesk",
+                          "fontSize": 12,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "rrmBL",
+          "name": "Toast",
+          "fill": "rgba(15, 23, 42, 0.8)",
+          "cornerRadius": 999,
+          "stroke": {
+            "align": "center",
+            "thickness": 1,
+            "fill": "rgba(51, 65, 85, 0.5)"
+          },
+          "gap": 8,
+          "padding": [
+            8,
+            16
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "I4SHy",
+              "name": "toastIcon",
+              "width": 14,
+              "height": 14,
+              "iconFontName": "check",
+              "iconFontFamily": "Material Symbols Outlined",
+              "fill": "#34d399"
+            },
+            {
+              "type": "text",
+              "id": "ltJO1",
+              "name": "toastText",
+              "fill": "#e2e8f0",
+              "content": "Copied to Clipboard!",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 11,
+              "fontWeight": "500",
+              "letterSpacing": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "rectangle",
+      "id": "5dtdH",
+      "x": -179,
+      "y": 0,
+      "name": "Logo",
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "../../src/images/TableMorph.png",
+        "mode": "fill"
+      },
+      "width": 79,
+      "height": 79
+    }
+  ]
+}
