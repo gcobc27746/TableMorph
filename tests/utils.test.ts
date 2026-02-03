@@ -198,6 +198,95 @@ describe('convertToLatex', () => {
     expect(result).toContain('\\multirow{2}{*}{t}')
     expect(result).toContain('\\usepackage{multirow}')
   })
+
+  it('should handle multiline text in cells using tabular environment', () => {
+    const data = [['Line1\nLine2', 'B'], ['C', 'D']]
+    const result = convertToLatex(data)
+    expect(result).toContain('\\begin{tabular}[c]{@{}l@{}}')
+    expect(result).toContain('Line1\\\\')
+    expect(result).toContain('Line2')
+    expect(result).toContain('\\end{tabular}')
+  })
+
+  it('should handle multiline text with multicolumn', () => {
+    const html = '<table><tr><td colspan="2">Line1\nLine2</td><td>B</td></tr><tr><td>C</td><td>D</td><td>E</td></tr></table>'
+    const tableData = parseHtmlTable(html)
+    const result = convertToLatex(tableData)
+    expect(result).toContain('\\multicolumn{2}{l}{\\begin{tabular}[c]{@{}l@{}}')
+    expect(result).toContain('Line1\\\\')
+    expect(result).toContain('Line2')
+    expect(result).toContain('\\end{tabular}}')
+  })
+
+  it('should handle multiline text with multirow', () => {
+    const html = '<table><tr><td rowspan="2">Line1\nLine2</td><td>B</td></tr><tr><td>C</td></tr></table>'
+    const tableData = parseHtmlTable(html)
+    const result = convertToLatex(tableData)
+    expect(result).toContain('\\multirow{2}{*}{\\begin{tabular}[c]{@{}l@{}}')
+    expect(result).toContain('Line1\\\\')
+    expect(result).toContain('Line2')
+    expect(result).toContain('\\end{tabular}}')
+    expect(result).toContain('\\usepackage{multirow}')
+  })
+
+  it('should handle Windows-style newlines (\\r\\n) in cells', () => {
+    const data = [['Line1\r\nLine2', 'B'], ['C', 'D']]
+    const result = convertToLatex(data)
+    expect(result).toContain('\\begin{tabular}[c]{@{}l@{}}')
+    expect(result).toContain('Line1\\\\')
+    expect(result).toContain('Line2')
+    expect(result).not.toContain('\r\n')
+  })
+
+  it('should handle Mac-style newlines (\\r) in cells', () => {
+    const data = [['Line1\rLine2', 'B'], ['C', 'D']]
+    const result = convertToLatex(data)
+    expect(result).toContain('\\begin{tabular}[c]{@{}l@{}}')
+    expect(result).toContain('Line1\\\\')
+    expect(result).toContain('Line2')
+    expect(result).not.toContain('\r')
+  })
+
+  it('should not add tabular environment for cells without newlines', () => {
+    const data = [['Single Line', 'B'], ['C', 'D']]
+    const result = convertToLatex(data)
+    expect(result).not.toContain('\\begin{tabular}[c]{@{}l@{}}')
+    expect(result).toContain('Single Line')
+  })
+
+  it('should handle complex table with multiline cells matching expected format', () => {
+    // 這個測試對應使用者提供的範例表格
+    const html = '<table><tr><td></td><td colspan="2">a</td><td colspan="2">b\nA</td></tr><tr><td rowspan="2">t</td><td>c\nR</td><td>d</td><td>e</td><td>f</td></tr><tr><td>g</td><td>h</td><td>j</td><td>k</td></tr><tr><td>r</td><td>i</td><td>o</td><td>o</td><td>o</td></tr></table>'
+    const tableData = parseHtmlTable(html)
+    const result = convertToLatex(tableData)
+    
+    // 檢查 multicolumn 與多行文字的組合
+    expect(result).toContain('\\multicolumn{2}{l}{a}')
+    expect(result).toContain('\\multicolumn{2}{l}{\\begin{tabular}[c]{@{}l@{}}b\\\\')
+    expect(result).toContain('A\\end{tabular}}')
+    
+    // 檢查 multirow 與多行文字的組合
+    expect(result).toContain('\\multirow{2}{*}{t}')
+    expect(result).toContain('\\begin{tabular}[c]{@{}l@{}}c\\\\')
+    expect(result).toContain('R\\end{tabular}')
+    
+    // 檢查最後一行沒有尾隨的 \\
+    const lines = result.split('\n')
+    const lastTableRow = lines.find(line => line.trim().startsWith('r'))
+    expect(lastTableRow).toBeTruthy()
+    if (lastTableRow) {
+      expect(lastTableRow.trim()).not.toMatch(/\\\\\s*$/)
+    }
+    
+    expect(result).toContain('\\usepackage{multirow}')
+  })
+
+  it('should escape special LaTeX characters in multiline cells', () => {
+    const data = [['Line1 & Line2\nLine3 % Line4', 'B'], ['C', 'D']]
+    const result = convertToLatex(data)
+    expect(result).toContain('Line1 \\& Line2\\\\')
+    expect(result).toContain('Line3 \\% Line4')
+  })
 })
 
 describe('convertToJson', () => {

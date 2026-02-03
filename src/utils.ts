@@ -481,10 +481,26 @@ export const convertToLatex = (tableData: TableData | string[][]): string => {
       .replace(/\}/g, '\\}')
       .replace(/~/g, '\\textasciitilde{}')
       .replace(/\^/g, '\\textasciicircum{}')
-      // 處理換行符：LaTeX 表格中換行符會破壞結構，替換為 \newline 或空格
-      .replace(/\r\n/g, ' ')
-      .replace(/\n/g, ' ')
-      .replace(/\r/g, ' ')
+
+  // 處理多行文字：將換行符轉換為 LaTeX 表格中的多行格式
+  const processMultilineCell = (value: string): string => {
+    // 統一處理換行符：將所有換行符統一為 \n
+    const normalized = value
+      .replace(/\r\n/g, '\n')
+      .replace(/\r/g, '\n')
+    
+    // 如果沒有換行符，直接返回 escape 後的值
+    if (!normalized.includes('\n')) {
+      return escapeLatex(value)
+    }
+    
+    // 將每行分別 escape，然後用 \\ 連接
+    const lines = normalized.split('\n').map(line => escapeLatex(line))
+    const multilineContent = lines.join('\\\\')
+    
+    // 使用 tabular 環境包裝多行內容
+    return `\\begin{tabular}[c]{@{}l@{}}${multilineContent}\\end{tabular}`
+  }
 
   // 追蹤每個位置是否被 rowspan 佔用
   const rowspanActive: boolean[][] = []
@@ -531,7 +547,8 @@ export const convertToLatex = (tableData: TableData | string[][]): string => {
         continue
       }
       
-      let cellContent = escapeLatex(cell.value)
+      // 處理多行文字：如果包含換行符，使用 tabular 環境包裝
+      let cellContent = processMultilineCell(cell.value)
       const colspan = cell.colspan || 1
       const rowspan = cell.rowspan || 1
       
@@ -551,7 +568,13 @@ export const convertToLatex = (tableData: TableData | string[][]): string => {
       colIndex += colspan - 1
     }
     
-    rows.push(cells.join(' & ') + ' \\\\')
+    // 最後一行不需要尾隨的 \\
+    const rowContent = cells.join(' & ')
+    if (rowIndex < data.length - 1) {
+      rows.push(rowContent + ' \\\\')
+    } else {
+      rows.push(rowContent)
+    }
   }
 
   const tabularContent = [`\\begin{tabular}{${columnSpec}}`, ...rows, '\\end{tabular}'].join('\n')
