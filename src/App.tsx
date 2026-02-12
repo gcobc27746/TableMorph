@@ -360,8 +360,12 @@ function App() {
           </button>
         </div>
         <button className="app__editor-button" type="button" onClick={openTableEditor}>
-          <span className="material-symbols-outlined">open_in_new</span>
-          Open Table Editor
+          <span className="app__editor-button-icon material-symbols-outlined">edit_note</span>
+          <span className="app__editor-button-text">
+            <strong>Open Table Editor</strong>
+            <small>Edit in new tab</small>
+          </span>
+          <span className="material-symbols-outlined app__editor-button-arrow">open_in_new</span>
         </button>
         {status ? (
           <div className={`toast ${isError ? 'toast--error' : ''}`} role="status">

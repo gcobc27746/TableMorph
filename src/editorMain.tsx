@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import EditorApp from './editor'
 import './index.css'
 
+document.body.classList.add('editor-page')
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <EditorApp />
