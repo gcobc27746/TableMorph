@@ -1,0 +1,260 @@
+.editor {
+  min-height: 100vh;
+  background: #101622;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor__topbar {
+  height: 56px;
+  border-bottom: 1px solid #1e293b;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  gap: 16px;
+}
+
+.editor__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.editor__brand-icon {
+  background: #135bec;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+}
+
+.editor__brand h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.editor__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.editor__actions button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #cbd5e1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.editor__actions button:hover {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.editor__actions button .material-symbols-outlined {
+  font-size: 17px;
+}
+
+.editor__actions .danger {
+  color: #fca5a5;
+}
+
+.editor__main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.editor__grid-wrap {
+  flex: 1;
+  overflow: auto;
+  background: #020617;
+}
+
+.editor__table {
+  border-collapse: collapse;
+  min-width: 100%;
+  width: max-content;
+  background: #0f172a;
+}
+
+.editor__table th,
+.editor__table td {
+  border: 1px solid #1e293b;
+  position: relative;
+}
+
+.editor__table thead th {
+  background: #0f172a;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  height: 38px;
+}
+
+.editor__table .corner {
+  background: #0b1220;
+}
+
+.editor__table .row-num {
+  background: #0b1220;
+  color: #64748b;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.editor__table td {
+  padding: 0;
+  background: #0b1220;
+}
+
+.editor__table td input {
+  width: 100%;
+  min-height: 38px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #e2e8f0;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.editor__table td input:focus {
+  box-shadow: inset 0 0 0 2px #135bec;
+  background: rgba(19, 91, 236, 0.08);
+}
+
+.cell-selected {
+  background: rgba(19, 91, 236, 0.14) !important;
+}
+
+.cell-active {
+  box-shadow: inset 0 0 0 2px #135bec;
+  z-index: 2;
+}
+
+.editor__resizer {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.editor__sidebar {
+  width: 280px;
+  border-left: 1px solid #1e293b;
+  background: #0f172a;
+  padding: 18px;
+}
+
+.editor__sidebar h2 {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.editor__sidebar p {
+  margin: 10px 0 16px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.editor__sidebar label {
+  display: block;
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.editor__sidebar select {
+  width: 100%;
+  border: 1px solid #334155;
+  background: #020617;
+  color: #e2e8f0;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.editor__copy {
+  width: 100%;
+  margin-top: 12px;
+  border: 1px solid #1d4ed8;
+  background: #135bec;
+  color: #fff;
+  border-radius: 9px;
+  padding: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.editor__copy:hover {
+  background: #1d4ed8;
+}
+
+.editor__meta {
+  margin-top: 18px;
+  border-top: 1px solid #1e293b;
+  padding-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.editor__meta div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.editor__meta strong {
+  color: #f1f5f9;
+}
+
+.editor__toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  background: #0b1220;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  padding: 8px 14px;
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .editor__main {
+    flex-direction: column;
+  }
+
+  .editor__sidebar {
+    width: 100%;
+    border-left: 0;
+    border-top: 1px solid #1e293b;
+  }
+}
