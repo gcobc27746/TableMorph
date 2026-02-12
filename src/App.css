@@ -193,3 +193,22 @@
 .toast--error .toast__icon {
   color: #ef4444;
 }
+.app__editor-button {
+  margin-top: 10px;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  background: rgba(14, 116, 144, 0.2);
+  color: #67e8f9;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.app__editor-button:hover {
+  background: rgba(8, 145, 178, 0.3);
+}

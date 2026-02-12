@@ -1,0 +1,103 @@
+.editor {
+  min-height: 100vh;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.editor__header h1 {
+  margin: 0;
+}
+
+.editor__header p {
+  margin: 8px 0 0;
+  color: #94a3b8;
+}
+
+.editor__toolbar {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.editor__toolbar button {
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: #f8fafc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.editor__toolbar button:hover {
+  background: #334155;
+}
+
+.editor__spacer {
+  flex: 1;
+}
+
+.editor__sheet-wrap {
+  overflow: auto;
+  margin-top: 16px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+}
+
+.editor__sheet {
+  border-collapse: collapse;
+  width: max-content;
+  min-width: 100%;
+  table-layout: fixed;
+}
+
+.editor__sheet th,
+.editor__sheet td {
+  border: 1px solid #334155;
+  position: relative;
+}
+
+.editor__sheet th {
+  background: #1e293b;
+  height: 30px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.editor__resizer {
+  position: absolute;
+  right: -3px;
+  top: 0;
+  height: 100%;
+  width: 6px;
+  cursor: col-resize;
+}
+
+.editor__sheet td {
+  padding: 0;
+  background: #0b1220;
+}
+
+.editor__sheet td input {
+  width: 100%;
+  min-height: 38px;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  color: #e2e8f0;
+  padding: 8px;
+}
+
+.editor__sheet td.is-selected {
+  outline: 2px solid #22d3ee;
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+.editor__status {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #22c55e;
+}

@@ -305,6 +305,18 @@ function App() {
   const getCardClass = (format: string, baseClass: string) =>
     `card ${baseClass}${activeFormat === format ? ' card--active' : ''}`
 
+  const openTableEditor = () => {
+    const runtime = (globalThis as { chrome?: { runtime?: { getURL: (path: string) => string }; tabs?: { create: (options: { url: string }) => void } } }).chrome
+    const editorUrl = runtime?.runtime?.getURL('editor.html') ?? `${window.location.origin}/editor.html`
+
+    if (runtime?.tabs?.create) {
+      runtime.tabs.create({ url: editorUrl })
+      return
+    }
+
+    window.open(editorUrl, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <div className="app">
       <header className="app__header">
@@ -347,6 +359,10 @@ function App() {
             <span className="card__label">JSON</span>
           </button>
         </div>
+        <button className="app__editor-button" type="button" onClick={openTableEditor}>
+          <span className="material-symbols-outlined">open_in_new</span>
+          Open Table Editor
+        </button>
         {status ? (
           <div className={`toast ${isError ? 'toast--error' : ''}`} role="status">
             <span className="material-symbols-outlined toast__icon">
